@@ -10,7 +10,7 @@ class Config:
     MAIL_USERNAME = os.environ.get('email_user')
     MAIL_PASSWORD = os.environ.get('email_pass')
     MONGODB_SETTINGS = {
-        'username': os.environ.get("MONGODB_BLOG_USERNAME"),
-        'password': os.environ.get("MONGODB_BLOG_PASSWORD"),
-        'host': os.environ.get("MONGODB_DATABASE_BLOG_URI")
+        'username': os.environ.get('mongodb_blog_username'),
+        'password': os.environ.get('mongodb_blog_password'),
+        'host': os.environ.get('mongodb_database_blog_uri')
     }
