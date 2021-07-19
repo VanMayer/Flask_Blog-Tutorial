@@ -10,7 +10,7 @@ class Config:
     MAIL_USERNAME = os.environ.get('email_user')
     MAIL_PASSWORD = os.environ.get('email_pass')
     MONGODB_SETTINGS = {
-        'username': os.environ.get('mongodb_blog_username'),
-        'password': os.environ.get('mongodb_blog_password'),
-        'host': os.environ.get('mongodb_database_blog_uri')
+        'username': 'VanMay',
+        'password': 'Blog2021ZO5',
+        'host': 'mongodb+srv://flaskblog.ulelq.mongodb.net/mongoblog'
     }

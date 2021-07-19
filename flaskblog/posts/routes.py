@@ -21,7 +21,7 @@ def new_post():
                            form=form, legend='New Post')
 
 
-@posts.route("/post/<:post_id>")
+@posts.route("/post/<post_id>")
 def post(post_id):
     post = Post.objects.get_or_404(id=post_id)
     return render_template('post.html', title=post.title, post=post)
