@@ -1,0 +1,38 @@
+# Query: date_posted
+# ContextLines: 1
+
+7 results - 6 files
+
+flaskblog/models.py:
+  43      title = db.StringField(nullable=False)
+  44:     date_posted = db.DateField(nullable=False, default=datetime.utcnow)
+  45      content = db.StringField(nullable=False)
+
+  48      def __repr__(self):
+  49:         return f"Post('{self.title}', '{self.date_posted}')"
+  50  
+
+flaskblog/main/routes.py:
+  10      page = request.args.get('page', 1, type=int)
+  11:     #posts = Post.query.order_by(Post.date_posted.desc()).paginate(page=page, per_page=5)
+  12      posts = posts = Post.objects.sort({"date_posted":-1})
+
+flaskblog/templates/home.html:
+  8                <a class="mr-2" href="{{ url_for('users.user_posts', username=post.user_id.username) }}">{{ post.user_id.username }}</a>
+  9:               <small class="text-muted">{{ post.date_posted.strftime('%Y-%m-%d') }}</small>
+  10              </div>
+
+flaskblog/templates/post.html:
+  7          <a class="mr-2" href="{{ url_for('users.user_posts', username=post.user_id.username) }}">{{ post.user_id.username }}</a>
+  8:         <small class="text-muted">{{ post.date_posted.strftime('%Y-%m-%d') }}</small>
+  9          {% if post.user_id.id == current_user.id %}
+
+flaskblog/templates/user_posts.html:
+   9                <a class="mr-2" href="{{ url_for('users.user_posts', username=post.author.username) }}">{{ post.author.username }}</a>
+  10:               <small class="text-muted">{{ post.date_posted.strftime('%Y-%m-%d') }}</small>
+  11              </div>
+
+flaskblog/users/routes.py:
+  73      posts = Post.objects(author=user)\
+  74:         .order_by(Post.date_posted.desc())\
+  75          .paginate(page=page, per_page=5)

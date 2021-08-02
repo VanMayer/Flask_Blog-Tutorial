@@ -7,5 +7,6 @@ class PostForm(FlaskForm):
     title = StringField('Title',
                         validators=[DataRequired()])
     content = TextAreaField('Content', validators=[DataRequired()])
+    recommendation = SubmitField('Make a recommendation')
     submit = SubmitField('Post')
     

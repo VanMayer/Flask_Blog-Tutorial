@@ -6,8 +6,11 @@ from flask_login import UserMixin
 
 
 @login_manager.user_loader
-def load_user(user_id):    
-    return User.objects.get(id=user_id)
+def load_user(user_id):
+    try:
+        return User.objects.get(id=user_id)
+    except:
+        return None
     
 
 class User(db.Document, UserMixin):
@@ -20,7 +23,7 @@ class User(db.Document, UserMixin):
 
     def get_reset_token(self, expires_sec=1800):
         s = Serializer(current_app.config['SECRET_KEY'], expires_sec)
-        return s.dumps({'user_id': self.id}).decode('utf-8')
+        return s.dumps({'user_id': str(self.id)}).decode('utf-8')
 
     @staticmethod
     def verify_reset_token(token):
@@ -38,9 +41,10 @@ class User(db.Document, UserMixin):
 class Post(db.Document):
     #id = db.Column(db.Integer, primary_key=True)
     title = db.StringField(nullable=False)
-    date_posted = db.DateField(nullable=False, default=datetime.utcnow)
+    date_posted = db.DateTimeField(nullable=False, default=datetime.utcnow)
     content = db.StringField(nullable=False)
     user_id = db.ReferenceField('User')
+    recommendation = db.ListField(default=[])
 
     def __repr__(self):
         return f"Post('{self.title}', '{self.date_posted}')"
